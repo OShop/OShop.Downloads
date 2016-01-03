@@ -121,16 +121,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ProductDownloadController.cs" />
     <Compile Include="Drivers\DownloadableProductPartDriver.cs" />
+    <Compile Include="Drivers\OrderDownloadsPartDriver.cs" />
     <Compile Include="Handlers\DownloadableProductPartHandler.cs" />
-    <Compile Include="Migrations\CustomerDownloadsMigrations.cs" />
-    <Compile Include="Models\CustomerDownloadsPart.cs" />
+    <Compile Include="Handlers\OrderDownloadsPartHandler.cs" />
     <Compile Include="Models\DownloadableProductPart.cs" />
     <Compile Include="Migrations\DownloadsMigrations.cs" />
     <Compile Include="Models\DownloadableProductPartRecord.cs" />
+    <Compile Include="Models\OrderDownloadsPart.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Controllers\" />
+    <Content Include="Views\Parts\Order.Downloads.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />

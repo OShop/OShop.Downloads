@@ -7,9 +7,3 @@ OrchardVersion: 1.9
 Category: Commerce
 Description: Allows selling downloadable products.
 Dependencies: OShop.Orders, Orchard.MediaLibrary
-Features :
-    OShop.CustomerDownloads:
-		Name: OShop Customer Downloads
-		Category: Commerce
-        Description: Stores customer's downloadable products.
-		Dependencies: OShop.Downloads, OShop.Customers
