@@ -1,9 +1,12 @@
 ﻿using Orchard.ContentManagement;
 using Orchard.FileSystems.Media;
+using Orchard.Logging;
 using Orchard.MediaLibrary.Models;
 using OShop.Downloads.Models;
 using OShop.Models;
 using OShop.Services;
+using System;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Web.Mvc;
@@ -21,7 +24,11 @@ namespace OShop.Downloads.Controllers {
             _storageProvider = storageProvider;
             _ordersService = ordersService;
             _contentManager = contentManager;
+
+            Logger = NullLogger.Instance;
         }
+
+        public ILogger Logger { get; set; }
 
         public ActionResult Download(int Id, string Reference) {
             if(string.IsNullOrWhiteSpace(Reference)) {
@@ -48,11 +55,11 @@ namespace OShop.Downloads.Controllers {
             else {
                 var mediaPart = product.Media.As<MediaPart>();
                 try {
-                    var storagePath = _storageProvider.GetStoragePath(mediaPart.MediaUrl);
-                    var mediaFile = _storageProvider.GetFile(storagePath);
+                    var mediaFile = _storageProvider.GetFile(_storageProvider.Combine(mediaPart.FolderPath, mediaPart.FileName));
                     return File(mediaFile.OpenRead(), mediaPart.MimeType, mediaPart.FileName);
                 }
-                catch {
+                catch (Exception e) {
+                    Logger.Error(e, "Error retrieving downloadable product : " + mediaPart.MediaUrl);
                     return new HttpStatusCodeResult(HttpStatusCode.InternalServerError, "Error retrieving media");
                 }
             }
